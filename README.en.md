@@ -8,8 +8,6 @@
 ![Vue](https://img.shields.io/badge/Vue-3.5-42b883)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6)
 
-[简体中文](./README.md) | **English**
-
 A front-end base you can start working on immediately: **Vue 3 + TypeScript + Element Plus + Vite**, with bilingual routing, light/dark design tokens, a thin request layer and a complete engineering chain.
 
 FVBT only covers content-oriented sites. For permissions, dynamic menus or workflows, use V3TM instead of building them twice.

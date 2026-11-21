@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "FVBT - a minimal Vue 3 + TypeScript + Element Plus base for content sites, with full i18n support.",
   "type": "module",
-  "private": false,
+  "private": true,
   "license": "MIT",
   "author": "GooHvLiu",
   "repository": {
@@ -27,9 +27,6 @@
     "template",
     "starter",
     "blog"
-  ],
-  "files": [
-    "dist"
   ],
   "scripts": {
     "dev": "vite",

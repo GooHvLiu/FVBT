@@ -1,0 +1,85 @@
+{
+  "name": "fvbt",
+  "version": "1.0.0",
+  "description": "FVBT - a minimal Vue 3 + TypeScript + Element Plus base for content sites, with full i18n support.",
+  "type": "module",
+  "private": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=10.0.0"
+  },
+  "keywords": [
+    "vue3",
+    "typescript",
+    "vite",
+    "element-plus",
+    "i18n",
+    "template",
+    "starter",
+    "blog"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --build && vite-ssg build",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --build --force",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "stylelint": "stylelint \"src/**/*.{vue,scss,css}\" --allow-empty-input",
+    "stylelint:fix": "stylelint \"src/**/*.{vue,scss,css}\" --fix --allow-empty-input",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run stylelint && npm run typecheck",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,vue}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{scss,css}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "2.3.2",
+    "@unhead/vue": "2.1.18",
+    "axios": "1.21.1",
+    "element-plus": "2.14.8",
+    "vite-ssg": "28.3.0",
+    "vue": "3.5.46",
+    "vue-i18n": "11.4.23",
+    "vue-router": "5.5.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.4",
+    "@commitlint/config-conventional": "21.2.4",
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.6",
+    "@vitejs/plugin-vue": "6.0.11",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-vue": "10.12.1",
+    "globals": "17.14.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.6.1",
+    "prettier": "3.10.1",
+    "sass": "1.108.2",
+    "stylelint": "18.1.0",
+    "stylelint-config-recommended-vue": "2.0.0",
+    "stylelint-config-standard-scss": "18.0.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.73.0",
+    "unplugin-vue-components": "32.1.0",
+    "vite": "8.3.8",
+    "vue-tsc": "3.3.14"
+  }
+}

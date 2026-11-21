@@ -1,0 +1,77 @@
+/* 把 FVBT 令牌映射到 Element Plus 变量，业务侧不再直接改 EP 默认皮肤 */
+:root,
+html[data-theme='light'] {
+  --el-color-primary: #0f766e;
+  --el-color-primary-light-3: #579a92;
+  --el-color-primary-light-5: #87b7b3;
+  --el-color-primary-light-7: #b8d6d4;
+  --el-color-primary-light-8: #d0e4e2;
+  --el-color-primary-light-9: #e7f1f0;
+  --el-color-primary-dark-2: #0c5f58;
+  --el-color-success: var(--fvbt-color-success);
+  --el-color-warning: var(--fvbt-color-warning);
+  --el-color-danger: var(--fvbt-color-danger);
+  --el-color-error: var(--fvbt-color-danger);
+  --el-bg-color: var(--fvbt-color-surface);
+  --el-bg-color-page: var(--fvbt-color-bg);
+  --el-bg-color-overlay: var(--fvbt-color-surface);
+  --el-text-color-primary: var(--fvbt-color-text);
+  --el-text-color-regular: var(--fvbt-color-text-secondary);
+  --el-text-color-secondary: var(--fvbt-color-text-muted);
+  --el-text-color-placeholder: var(--fvbt-color-text-muted);
+  --el-text-color-disabled: var(--fvbt-color-text-muted);
+  --el-border-color: var(--fvbt-color-border);
+  --el-border-color-light: var(--fvbt-color-border);
+  --el-border-color-lighter: var(--fvbt-color-border);
+  --el-border-color-extra-light: var(--fvbt-color-border);
+  --el-border-color-dark: var(--fvbt-color-border-strong);
+  --el-border-color-darker: var(--fvbt-color-border-strong);
+  --el-fill-color: var(--fvbt-color-surface-muted);
+  --el-fill-color-light: var(--fvbt-color-surface-muted);
+  --el-fill-color-lighter: var(--fvbt-color-surface-muted);
+  --el-fill-color-blank: var(--fvbt-color-surface);
+  --el-box-shadow-light: var(--fvbt-shadow-sm);
+  --el-mask-color: rgb(15 20 25 / 70%);
+}
+
+html[data-theme='dark'] {
+  --el-color-primary: #5eead4;
+  --el-color-primary-light-3: #3d9d8c;
+  --el-color-primary-light-5: #2a6b5c;
+  --el-color-primary-light-7: #1f4239;
+  --el-color-primary-light-8: #1b332d;
+  --el-color-primary-light-9: #152420;
+  --el-color-primary-dark-2: #4bbda9;
+  --el-color-success: var(--fvbt-color-success);
+  --el-color-warning: var(--fvbt-color-warning);
+  --el-color-danger: var(--fvbt-color-danger);
+  --el-color-error: var(--fvbt-color-danger);
+  --el-bg-color: var(--fvbt-color-surface);
+  --el-bg-color-page: var(--fvbt-color-bg);
+  --el-bg-color-overlay: var(--fvbt-color-surface-muted);
+  --el-text-color-primary: var(--fvbt-color-text);
+  --el-text-color-regular: var(--fvbt-color-text-secondary);
+  --el-text-color-secondary: var(--fvbt-color-text-muted);
+  --el-text-color-placeholder: var(--fvbt-color-text-muted);
+  --el-text-color-disabled: var(--fvbt-color-text-muted);
+  --el-border-color: var(--fvbt-color-border);
+  --el-border-color-light: var(--fvbt-color-border);
+  --el-border-color-lighter: var(--fvbt-color-border);
+  --el-border-color-extra-light: var(--fvbt-color-border);
+  --el-border-color-dark: var(--fvbt-color-border-strong);
+  --el-border-color-darker: var(--fvbt-color-border-strong);
+  --el-fill-color: var(--fvbt-color-surface-muted);
+  --el-fill-color-light: var(--fvbt-color-surface-muted);
+  --el-fill-color-lighter: var(--fvbt-color-surface-muted);
+  --el-fill-color-blank: var(--fvbt-color-surface);
+  --el-box-shadow-light: var(--fvbt-shadow-sm);
+  --el-mask-color: rgb(6 10 14 / 80%);
+}
+
+/* 与令牌无关的通用项，只在这里设置一次 */
+:root {
+  --el-font-family: var(--fvbt-font-sans);
+  --el-border-radius-base: var(--fvbt-radius-sm);
+  --el-border-radius-small: 4px;
+  --el-transition-duration: 0.2s;
+}

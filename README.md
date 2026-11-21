@@ -8,7 +8,6 @@
 ![Vue](https://img.shields.io/badge/Vue-3.5-42b883)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6)
 
-**简体中文** | [English](./README.en.md)
 
 一个可以直接开工的前端基座模板：**Vue 3 + TypeScript + Element Plus + Vite**，内置中英双语、亮暗主题令牌、语言前缀路由、极薄请求层与完整的工程规范链。
 

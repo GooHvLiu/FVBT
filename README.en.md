@@ -1,10 +1,14 @@
 # FVBT
 
+[简体中文](./README.md) | **English**
+
 [![CI](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml/badge.svg)](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml)
 ![version](https://img.shields.io/badge/version-1.0.0-0f766e)
 ![license](https://img.shields.io/badge/license-MIT-0f766e)
 ![Vue](https://img.shields.io/badge/Vue-3.5-42b883)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6)
+
+[简体中文](./README.md) | **English**
 
 A front-end base you can start working on immediately: **Vue 3 + TypeScript + Element Plus + Vite**, with bilingual routing, light/dark design tokens, a thin request layer and a complete engineering chain.
 
@@ -13,6 +17,18 @@ FVBT only covers content-oriented sites. For permissions, dynamic menus or workf
 - Version: **1.0.0**
 - License: **MIT**
 - Docs language: English / 中文（`README.md`）
+
+## Preview
+
+| Home, light theme                           | Home, dark theme                          |
+| ------------------------------------------- | ----------------------------------------- |
+| ![Home light](./docs/images/home-light.png) | ![Home dark](./docs/images/home-dark.png) |
+
+| Component demo page                   | English UI, dark theme                      |
+| ------------------------------------- | ------------------------------------------- |
+| ![Demo](./docs/images/demo-light.png) | ![English dark](./docs/images/en-theme.png) |
+
+The screenshots come from this repository's pre-rendered output at a 1280 px desktop width, with no post-processing.
 
 ---
 
@@ -46,7 +62,7 @@ RBAC, dynamic menus, micro-frontends, form engines, multi-skin theming, GraphQL,
 - **Dark mode** — an inline script decides the first frame, so there is no white flash, and component styles stay single-source.
 - **On-demand UI** — Element Plus components and styles load on demand; the shared bundle is about 190 kB (70 kB gzip).
 - **Mock first** — the request flow is demonstrable without a backend, and page code does not change when one arrives.
-- **Static-host friendly** — pre-rendered `index.html`, `demo.html`, `en.html`, `404.html`; Netlify picks them up directly.
+- **Static-host friendly** — directory-style pre-rendering (`/demo/`, `/en/`, `/404/`) so GitHub Pages and Netlify resolve real paths without server rewrites.
 - **Disciplined tooling** — format on save, lint on commit, Conventional Commits.
 
 ---
@@ -104,7 +120,9 @@ npm run preview   # preview the build at http://localhost:4173
 
 ```
 FVBT
-├─ public/favicon.svg
+├─ docs/images/            # README screenshots
+├─ public/                 # favicon and .nojekyll for GitHub Pages
+├─ scripts/copy-404.mjs    # copies the 404 page to the site root
 ├─ src/
 │  ├─ api/                 # client, mock adapter, types, per-domain services
 │  ├─ assets/styles/       # tokens, mixins, Element Plus mapping, globals
@@ -119,10 +137,11 @@ FVBT
 │  ├─ utils/               # path, storage, formatting, message wrapper
 │  ├─ App.vue
 │  └─ main.ts
-├─ .env / .env.development / .env.staging / .env.production
+├─ .env / .env.development / .env.staging / .env.pages / .env.production
+├─ .github/workflows/      # ci.yml (quality gate) and pages.yml (Pages deploy)
 ├─ netlify.toml
 ├─ index.html
-├─ vite.config.ts
+├─ vite.config.ts          # plugins, alias, base path, SSG options
 └─ tsconfig.json / tsconfig.app.json / tsconfig.node.json
 ```
 
@@ -133,7 +152,8 @@ FVBT
 | Script                  | Purpose                                                |
 | ----------------------- | ------------------------------------------------------ |
 | `npm run dev`           | Development server                                     |
-| `npm run build`         | `vue-tsc --build` then `vite-ssg build`                |
+| `npm run build`         | Type check, pre-render, then emit a root `404.html`    |
+| `npm run build:pages`   | Same, but loads `.env.pages` with the `/FVBT/` prefix  |
 | `npm run preview`       | Preview `dist`                                         |
 | `npm run typecheck`     | Type check only (`--force` bypasses incremental cache) |
 | `npm run lint`          | ESLint, warnings fail the run                          |
@@ -151,15 +171,16 @@ FVBT
 
 ### 8.1 Environment
 
-| Variable               | Purpose                                                         | Default                    |
-| ---------------------- | --------------------------------------------------------------- | -------------------------- |
-| `VITE_APP_TITLE`       | Site name used in the footer and title suffix                   | `FVBT`                     |
-| `VITE_APP_DESCRIPTION` | Fallback description                                            | see `.env`                 |
-| `VITE_SITE_URL`        | Deployment origin for canonical and hreflang, no trailing slash | `https://fvbt.example.com` |
-| `VITE_API_BASE_URL`    | API prefix                                                      | `/api`                     |
-| `VITE_USE_MOCK`        | `true` uses the mock adapter                                    | per environment file       |
+| Variable               | Purpose                                                                   | Default                    |
+| ---------------------- | ------------------------------------------------------------------------- | -------------------------- |
+| `VITE_APP_TITLE`       | Site name used in the footer and title suffix                             | `FVBT`                     |
+| `VITE_APP_DESCRIPTION` | Fallback description                                                      | see `.env`                 |
+| `VITE_SITE_URL`        | Deployment origin for canonical and hreflang, no trailing slash           | `https://fvbt.example.com` |
+| `VITE_BASE_PATH`       | Sub-path the site is served from; `/` at a domain root, `/FVBT/` on Pages | see `.env.*`               |
+| `VITE_API_BASE_URL`    | API prefix                                                                | `/api`                     |
+| `VITE_USE_MOCK`        | `true` uses the mock adapter                                              | per environment file       |
 
-`.env` holds shared defaults, `.env.development` enables mocks, `.env.staging` points at the staging origin, and `.env.production` keeps mocks on so the static demo stays complete — switch `VITE_USE_MOCK` to `false` and replace `VITE_API_BASE_URL` when a real backend exists.
+`.env` holds shared defaults, `.env.development` enables mocks, `.env.staging` points at the staging origin, `.env.pages` targets the GitHub Pages sub-path (`/FVBT/` plus the site URL), and `.env.production` keeps mocks on so the static demo stays complete — switch `VITE_USE_MOCK` to `false` and replace `VITE_API_BASE_URL` when a real backend exists.
 
 ### 8.2 Site info
 
@@ -239,21 +260,47 @@ export const demoService = {
 
 ## 11. Build and deploy
 
-`npm run build` type-checks first, then pre-renders:
+`npm run build` type-checks first, then pre-renders into a directory layout — every page is an `index.html` inside its own folder, so static hosting resolves real paths without extension rewrites:
 
 ```
 dist/
-├─ index.html        # Chinese home
-├─ demo.html         # Chinese demo
-├─ en.html           # English home
-├─ en/demo.html      # English demo
-├─ 404.html          # unmatched paths
-└─ assets/           # hashed js / css
+├─ index.html          # Chinese home
+├─ demo/index.html     # Chinese demo
+├─ en/index.html       # English home
+├─ en/demo/index.html  # English demo
+├─ 404/index.html      # unmatched paths
+├─ 404.html            # root fallback for static hosts
+├─ .nojekyll
+└─ assets/             # hashed js / css
 ```
+
+`scripts/copy-404.mjs` runs at the end of the build and copies `404/index.html` to `404.html`, which is where Netlify and GitHub Pages fallbacks point.
+
+### GitHub Pages
+
+`.github/workflows/pages.yml` builds and publishes on every push to `main`, serving the site at `https://goohvliu.github.io/FVBT/`.
+
+A project page lives under the `/FVBT/` sub-path, so the build needs a matching prefix, supplied by `.env.pages`:
+
+```
+VITE_SITE_URL=https://goohvliu.github.io/FVBT
+VITE_BASE_PATH=/FVBT/
+```
+
+`vite.config.ts` reads `VITE_BASE_PATH` as `base`, and `main.ts` hands `import.meta.env.BASE_URL` to `ViteSSG`, so router prefixes, asset URLs, canonical and hreflang all follow. Verify locally with:
+
+```bash
+npm run build:pages
+npx vite preview --mode pages   # open http://localhost:4173/FVBT/
+```
+
+On the first run, set **Settings → Pages → Source** to **GitHub Actions** so the workflow may publish. For your own fork, change `/FVBT/` in `.env.pages` to your repository name.
+
+### Netlify
 
 `netlify.toml` already declares `npm run build` and `publish = "dist"`, plus a `/*` → `/404.html` fallback and immutable caching for `assets/*`. Import the repository on Netlify, then add `VITE_SITE_URL` and any other environment variables in the site settings.
 
-The output is plain static HTML, so Nginx, Cloudflare Pages, Vercel and GitHub Pages work too — make sure unmatched paths fall back to `404.html`.
+The output is plain static HTML, so Nginx, Cloudflare Pages, Vercel and GitHub Pages work too — set `VITE_BASE_PATH` when serving from a sub-path, and make sure unmatched paths fall back to `404.html`.
 
 ---
 
@@ -292,6 +339,9 @@ The folder is not a Git repository yet. Initialize it and run `npm run prepare`.
 
 **Can I drop pre-rendering?**
 Yes: change `build` to `vue-tsc --build && vite build` and replace the `ViteSSG` wrapper in `main.ts` with a plain app. You lose static first paint and the SEO benefit.
+
+**Styles and links break after deploying to a sub-path?**
+`base` did not follow. Rebuild with `VITE_BASE_PATH=/your-sub-path/` so routes and asset URLs are rewritten, then check locally with `npx vite preview --mode pages` and open the sub-path rather than the root.
 
 ---
 

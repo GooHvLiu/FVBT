@@ -14,7 +14,12 @@ import '@/assets/styles/global.scss'
 
 export const createApp = ViteSSG(
   App,
-  { routes: createLocaleRoutes(), scrollBehavior },
+  {
+    // 部署到子路径时（GitHub Pages 的 /FVBT/），路由基座必须与构建 base 保持一致
+    base: import.meta.env.BASE_URL,
+    routes: createLocaleRoutes(),
+    scrollBehavior,
+  },
   ({ app, router, isClient, routePath }) => {
     // 预渲染会逐个语言渲染页面，词条实例必须跟着页面走
     const i18n = createI18nInstance(localeFromPath(routePath))

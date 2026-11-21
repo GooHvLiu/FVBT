@@ -1,10 +1,14 @@
 # FVBT
 
+**简体中文** | [English](./README.en.md)
+
 [![CI](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml/badge.svg)](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml)
 ![version](https://img.shields.io/badge/version-1.0.0-0f766e)
 ![license](https://img.shields.io/badge/license-MIT-0f766e)
 ![Vue](https://img.shields.io/badge/Vue-3.5-42b883)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6)
+
+**简体中文** | [English](./README.en.md)
 
 一个可以直接开工的前端基座模板：**Vue 3 + TypeScript + Element Plus + Vite**，内置中英双语、亮暗主题令牌、语言前缀路由、极薄请求层与完整的工程规范链。
 
@@ -12,7 +16,19 @@ FVBT 只做「内容型站点」的底座，开箱即用，不塞业务脚手架
 
 - 版本：**1.0.0**
 - 许可证：**MIT**
-- 演示与文档语言：中文 / English（`README.en.md`）
+- 文档语言：中文 / English（`README.en.md`）
+
+## 界面预览
+
+| 中文首页（亮色）                              | 中文首页（暗色）                             |
+| --------------------------------------------- | -------------------------------------------- |
+| ![中文首页亮色](./docs/images/home-light.png) | ![中文首页暗色](./docs/images/home-dark.png) |
+
+| 组件示例页                                | 英文界面 + 暗色主题                     |
+| ----------------------------------------- | --------------------------------------- |
+| ![组件示例](./docs/images/demo-light.png) | ![英文暗色](./docs/images/en-theme.png) |
+
+截图来自本仓库的预渲染产物，1280 宽桌面端，未做后期处理。
 
 ---
 
@@ -46,7 +62,7 @@ RBAC、动态菜单、微前端、表单引擎、多皮肤系统、GraphQL、状
 - **暗色模式**：首帧前内联脚本判定主题，避免白屏闪烁；局部样式不需要写两套。
 - **按需引入**：Element Plus 组件与样式按需加载，全站基础包约 190 kB（gzip 70 kB）。
 - **Mock 先行**：没有后端也能演示请求流程，接入后端时页面代码一行不改。
-- **静态托管友好**：预渲染出 `index.html`、`demo.html`、`en.html`、`404.html`，Netlify 直接识别。
+- **静态托管友好**：目录式预渲染（`/demo/`、`/en/`、`/404/`），GitHub Pages、Netlify 都按真实路径访问，不需要服务端重写。
 - **工程规范**：保存即格式化，提交即校验，提交信息遵循 Conventional Commits。
 
 ---
@@ -111,8 +127,11 @@ npm run preview
 
 ```
 FVBT
+├─ docs/images/                 # README 截图
 ├─ public/
-│  └─ favicon.svg               # 站点图标
+│  ├─ favicon.svg               # 站点图标
+│  └─ .nojekyll                 # GitHub Pages 不走 Jekyll 处理
+├─ scripts/copy-404.mjs         # 目录式输出后补一份根级 404.html
 ├─ src/
 │  ├─ api/
 │  │  ├─ client.ts              # axios 实例、拦截器、统一错误
@@ -159,10 +178,11 @@ FVBT
 │  │  └─ feedback.ts            # ElMessage 单点封装
 │  ├─ App.vue                   # 根组件，只挂布局
 │  └─ main.ts                   # 应用入口：路由、i18n、主题、样式顺序
-├─ .env / .env.development / .env.staging / .env.production
+├─ .env / .env.development / .env.staging / .env.pages / .env.production
+├─ .github/workflows/           # ci.yml（质量门）与 pages.yml（Pages 发布）
 ├─ netlify.toml                 # Netlify 构建、重定向与缓存头
 ├─ index.html                   # 首帧主题脚本
-├─ vite.config.ts               # 插件、别名、SSG 选项
+├─ vite.config.ts               # 插件、别名、base 路径、SSG 选项
 └─ tsconfig.json / tsconfig.app.json / tsconfig.node.json
 ```
 
@@ -170,20 +190,21 @@ FVBT
 
 ## 7. 命令脚本
 
-| 命令                    | 作用                                              |
-| ----------------------- | ------------------------------------------------- |
-| `npm run dev`           | 启动开发服务器                                    |
-| `npm run build`         | `vue-tsc --build` 类型检查后执行 `vite-ssg build` |
-| `npm run preview`       | 预览 `dist` 产物                                  |
-| `npm run typecheck`     | 仅做类型检查（`--force` 忽略增量缓存）            |
-| `npm run lint`          | ESLint 检查，警告也算失败                         |
-| `npm run lint:fix`      | ESLint 自动修复                                   |
-| `npm run stylelint`     | 检查 `.vue` / `.scss` / `.css` 样式               |
-| `npm run stylelint:fix` | 样式自动修复                                      |
-| `npm run format`        | Prettier 全量格式化                               |
-| `npm run format:check`  | 只检查格式，用于 CI                               |
-| `npm run check`         | lint + stylelint + typecheck，提交前自查          |
-| `npm run prepare`       | 安装 husky 钩子                                   |
+| 命令                    | 作用                                                         |
+| ----------------------- | ------------------------------------------------------------ |
+| `npm run dev`           | 启动开发服务器                                               |
+| `npm run build`         | 类型检查 + 预渲染 + 生成根级 `404.html`（根域名部署用）      |
+| `npm run build:pages`   | 同上，但加载 `.env.pages`，带 `/FVBT/` 前缀，供 GitHub Pages |
+| `npm run preview`       | 预览 `dist` 产物                                             |
+| `npm run typecheck`     | 仅做类型检查（`--force` 忽略增量缓存）                       |
+| `npm run lint`          | ESLint 检查，警告也算失败                                    |
+| `npm run lint:fix`      | ESLint 自动修复                                              |
+| `npm run stylelint`     | 检查 `.vue` / `.scss` / `.css` 样式                          |
+| `npm run stylelint:fix` | 样式自动修复                                                 |
+| `npm run format`        | Prettier 全量格式化                                          |
+| `npm run format:check`  | 只检查格式，用于 CI                                          |
+| `npm run check`         | lint + stylelint + typecheck，提交前自查                     |
+| `npm run prepare`       | 安装 husky 钩子                                              |
 
 ---
 
@@ -191,15 +212,16 @@ FVBT
 
 ### 8.1 环境变量
 
-| 变量                   | 说明                                               | 默认                       |
-| ---------------------- | -------------------------------------------------- | -------------------------- |
-| `VITE_APP_TITLE`       | 站点名称，用于页脚与标题后缀                       | `FVBT`                     |
-| `VITE_APP_DESCRIPTION` | 默认描述，页面未指定时回落到这里                   | 见 `.env`                  |
-| `VITE_SITE_URL`        | 部署域名，用于 canonical 与 hreflang，末尾不带斜杠 | `https://fvbt.example.com` |
-| `VITE_API_BASE_URL`    | 接口前缀                                           | `/api`                     |
-| `VITE_USE_MOCK`        | `true` 走 Mock 适配器，`false` 走真实接口          | 见 `.env.*`                |
+| 变量                   | 说明                                                     | 默认                       |
+| ---------------------- | -------------------------------------------------------- | -------------------------- |
+| `VITE_APP_TITLE`       | 站点名称，用于页脚与标题后缀                             | `FVBT`                     |
+| `VITE_APP_DESCRIPTION` | 默认描述，页面未指定时回落到这里                         | 见 `.env`                  |
+| `VITE_SITE_URL`        | 部署域名，用于 canonical 与 hreflang，末尾不带斜杠       | `https://fvbt.example.com` |
+| `VITE_BASE_PATH`       | 部署子路径，根域名用 `/`，GitHub Pages 项目页用 `/FVBT/` | 见 `.env.*`                |
+| `VITE_API_BASE_URL`    | 接口前缀                                                 | `/api`                     |
+| `VITE_USE_MOCK`        | `true` 走 Mock 适配器，`false` 走真实接口                | 见 `.env.*`                |
 
-环境文件分工：`.env` 放公共默认值，`.env.development` 打开 Mock，`.env.staging` 指向预发布域名，`.env.production` 为静态演示保留 Mock——接真实后端的项目请把 `VITE_USE_MOCK` 改成 `false` 并替换 `VITE_API_BASE_URL`。
+环境文件分工：`.env` 放公共默认值，`.env.development` 打开 Mock，`.env.staging` 指向预发布域名，`.env.pages` 供 GitHub Pages 使用（`/FVBT/` 前缀 + 站点地址），`.env.production` 为静态演示保留 Mock——接真实后端的项目请把 `VITE_USE_MOCK` 改成 `false` 并替换 `VITE_API_BASE_URL`。
 
 ### 8.2 站点信息
 
@@ -307,17 +329,41 @@ export const demoService = {
 
 ## 11. 构建与部署
 
-`npm run build` 会先做类型检查，再用 `vite-ssg` 预渲染：
+`npm run build` 会先做类型检查，再用 `vite-ssg` 预渲染，输出目录式结构——每个页面是独立目录下的 `index.html`，静态托管按真实路径直接命中，不依赖扩展名重写：
 
 ```
 dist/
-├─ index.html        # 中文首页
-├─ demo.html         # 中文示例页
-├─ en.html           # 英文首页
-├─ en/demo.html      # 英文示例页
-├─ 404.html          # 未命中地址
-└─ assets/           # 带 hash 的 js / css
+├─ index.html          # 中文首页
+├─ demo/index.html     # 中文示例页
+├─ en/index.html       # 英文首页
+├─ en/demo/index.html  # 英文示例页
+├─ 404/index.html      # 未命中地址
+├─ 404.html            # 根级兜底，供静态托管回退
+├─ .nojekyll
+└─ assets/             # 带 hash 的 js / css
 ```
+
+`404.html` 由 `scripts/copy-404.mjs` 在构建末尾从 `404/index.html` 复制而来，Netlify、GitHub Pages 的兜底规则都指向它。
+
+### GitHub Pages
+
+仓库自带 `.github/workflows/pages.yml`，push 到 `main` 后自动构建并发布到 `https://goohvliu.github.io/FVBT/`。
+
+Pages 的项目页挂在子路径 `/FVBT/` 下，所以构建要带前缀，由 `.env.pages` 提供：
+
+```
+VITE_SITE_URL=https://goohvliu.github.io/FVBT
+VITE_BASE_PATH=/FVBT/
+```
+
+`vite.config.ts` 读取 `VITE_BASE_PATH` 作为 `base`，`main.ts` 把 `import.meta.env.BASE_URL` 交给 `ViteSSG`，路由前缀、静态资源地址、canonical 与 hreflang 会一起跟着变；本地验证用：
+
+```bash
+npm run build:pages
+npx vite preview --mode pages   # 访问 http://localhost:4173/FVBT/
+```
+
+首次发布需要在仓库 **Settings → Pages** 把 Source 选成 **GitHub Actions**，工作流才有发布权限；换成自己的仓库时，把 `.env.pages` 里的 `/FVBT/` 改成仓库名即可。
 
 ### Netlify
 
@@ -333,7 +379,7 @@ publish = "dist"
 
 ### 其他静态托管
 
-产物是纯静态文件，Nginx、Cloudflare Pages、Vercel、GitHub Pages 都能直接托管；注意把未知路径回落到 `404.html`，否则刷新会 404。
+产物是纯静态文件，Nginx、Cloudflare Pages、Vercel 都能托管；挂在子路径（如 `/site/`）时，把 `VITE_BASE_PATH` 设成对应前缀再构建，并把未知路径回落到 `404.html`。
 
 ---
 
@@ -374,6 +420,9 @@ docs(readme): 补充部署说明
 
 **能不用预渲染吗？**
 可以。把 `build` 脚本换成 `vue-tsc --build && vite build`，同时删掉 `main.ts` 里的 `ViteSSG` 包装即可退化成普通 SPA，但会失去静态首屏与 SEO 收益。
+
+**部署到子路径后样式和跳转都失效？**
+这是 `base` 没跟着变。用 `VITE_BASE_PATH=/你的子路径/` 重新构建，路由与资源地址会一起改写；本地核对用 `npx vite preview --mode pages`，直接开 `/你的子路径/` 而不是根路径。
 
 ---
 

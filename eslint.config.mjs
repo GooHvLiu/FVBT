@@ -62,7 +62,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/*.config.mjs', '**/*.config.ts', 'eslint.config.mjs'],
+    files: ['**/*.config.mjs', '**/*.config.ts', 'eslint.config.mjs', 'scripts/**/*.mjs'],
     rules: {
       'no-console': 'off',
     },

@@ -30,7 +30,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --build && vite-ssg build",
+    "build": "vue-tsc --build && vite-ssg build && node scripts/copy-404.mjs",
+    "build:pages": "vue-tsc --build && vite-ssg build --mode pages && node scripts/copy-404.mjs",
     "preview": "vite preview",
     "typecheck": "vue-tsc --build --force",
     "lint": "eslint . --max-warnings 0",

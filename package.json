@@ -5,6 +5,15 @@
   "type": "module",
   "private": false,
   "license": "MIT",
+  "author": "GooHvLiu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GooHvLiu/FVBT.git"
+  },
+  "homepage": "https://github.com/GooHvLiu/FVBT#readme",
+  "bugs": {
+    "url": "https://github.com/GooHvLiu/FVBT/issues"
+  },
   "engines": {
     "node": ">=20.19.0",
     "npm": ">=10.0.0"

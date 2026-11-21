@@ -1,5 +1,11 @@
 # FVBT
 
+[![CI](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml/badge.svg)](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml)
+![version](https://img.shields.io/badge/version-1.0.0-0f766e)
+![license](https://img.shields.io/badge/license-MIT-0f766e)
+![Vue](https://img.shields.io/badge/Vue-3.5-42b883)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6)
+
 A front-end base you can start working on immediately: **Vue 3 + TypeScript + Element Plus + Vite**, with bilingual routing, light/dark design tokens, a thin request layer and a complete engineering chain.
 
 FVBT only covers content-oriented sites. For permissions, dynamic menus or workflows, use V3TM instead of building them twice.
@@ -163,7 +169,7 @@ Edit `src/config/site.ts`:
 export const siteConfig = {
   name: import.meta.env.VITE_APP_TITLE || 'FVBT',
   url: (import.meta.env.VITE_SITE_URL || 'https://fvbt.example.com').replace(/\/+$/, ''),
-  repository: 'https://github.com/your-account/fvbt', // point to your repository
+  repository: 'https://github.com/GooHvLiu/FVBT', // point to your repository
   license: 'MIT',
   // ...
 }

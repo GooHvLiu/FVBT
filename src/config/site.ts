@@ -10,7 +10,7 @@ export const siteConfig = {
   url: (import.meta.env.VITE_SITE_URL || 'https://fvbt.example.com').replace(/\/+$/, ''),
   version: __APP_VERSION__,
   /** 开源仓库地址，替换成自己的仓库即可 */
-  repository: 'https://github.com/your-account/fvbt',
+  repository: 'https://github.com/GooHvLiu/FVBT',
   license: 'MIT',
   defaultLocale: DEFAULT_LOCALE as AppLocale,
   locales: APP_LOCALES,

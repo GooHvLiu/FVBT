@@ -1,5 +1,11 @@
 # FVBT
 
+[![CI](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml/badge.svg)](https://github.com/GooHvLiu/FVBT/actions/workflows/ci.yml)
+![version](https://img.shields.io/badge/version-1.0.0-0f766e)
+![license](https://img.shields.io/badge/license-MIT-0f766e)
+![Vue](https://img.shields.io/badge/Vue-3.5-42b883)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178c6)
+
 一个可以直接开工的前端基座模板：**Vue 3 + TypeScript + Element Plus + Vite**，内置中英双语、亮暗主题令牌、语言前缀路由、极薄请求层与完整的工程规范链。
 
 FVBT 只做「内容型站点」的底座，开箱即用，不塞业务脚手架；需要权限、动态菜单、工作流这类后台能力时，请使用 V3TM，两边不重复建设。
@@ -203,7 +209,7 @@ FVBT
 export const siteConfig = {
   name: import.meta.env.VITE_APP_TITLE || 'FVBT',
   url: (import.meta.env.VITE_SITE_URL || 'https://fvbt.example.com').replace(/\/+$/, ''),
-  repository: 'https://github.com/your-account/fvbt', // 换成自己的仓库
+  repository: 'https://github.com/GooHvLiu/FVBT', // 换成自己的仓库
   license: 'MIT',
   // ...
 }
